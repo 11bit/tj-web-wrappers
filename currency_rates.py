@@ -9,6 +9,8 @@
 from lxml import html
 import requests
 
+import argparse
+
 URL = 'http://www.kkb.tj/ru/page/RatesExchanges'
 NAME_MAPPING = {
     u'Доллар США': 'USD',
@@ -48,3 +50,14 @@ def getRates(day, month, year):
         year=year
     )
     return _parsePage(_getKKBPage(params))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Get currency rates.')
+
+    parser.add_argument('day', metavar='D', type=int, help='Day 1..31')
+    parser.add_argument('month', metavar='M', type=int, help='Month 1..12')
+    parser.add_argument('year', metavar='Y', type=int, help='Year')
+
+    args = parser.parse_args()
+    print getRates(args.day, args.month, args.year)
